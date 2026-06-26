@@ -1,9 +1,10 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState, type FormEvent } from "react";
 import heroImage from "@/assets/hero-riviera.jpg";
-import nigelPortrait from "@/assets/nigel-portrait.jpg";
+import nigelPortrait from "@/assets/nigel-portrait.jpeg.asset.json";
+import { PropertyCard } from "@/components/PropertyCard";
 import {
-  properties,
+  featuredProperties,
   WHATSAPP_CATALOG_URL,
   WHATSAPP_DIRECT_URL,
 } from "@/data/properties";
@@ -195,82 +196,35 @@ function Properties() {
         </SectionHeading>
 
         <div className="mt-16 grid gap-12 md:grid-cols-2 md:gap-x-10 md:gap-y-16">
-          {properties.map((p) => (
-            <PropertyCard key={p.id} property={p} />
+          {featuredProperties.map((p) => (
+            <PropertyCard key={p.slug} property={p} />
           ))}
         </div>
 
         <div className="mt-20 flex flex-col items-center text-center">
           <div className="h-px w-12 bg-ev-red" />
           <p className="mt-8 max-w-xl text-base text-muted-foreground">
-            The full collection is shared privately, on request.
+            Explore every property currently represented, or browse the live catalogue on WhatsApp.
           </p>
-          <a
-            href={WHATSAPP_CATALOG_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="mt-6 inline-flex items-center gap-3 border border-charcoal px-8 py-4 text-xs font-medium uppercase tracking-[0.22em] text-charcoal transition-colors hover:bg-charcoal hover:text-white"
-          >
-            Browse the full collection on WhatsApp
-            <ArrowRight />
-          </a>
+          <div className="mt-6 flex flex-wrap items-center justify-center gap-4">
+            <Link
+              to="/collection"
+              className="inline-flex items-center gap-3 bg-charcoal px-8 py-4 text-xs font-medium uppercase tracking-[0.22em] text-white transition-colors hover:bg-ev-red"
+            >
+              View the full collection
+            </Link>
+            <a
+              href={WHATSAPP_CATALOG_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-3 border border-charcoal px-8 py-4 text-xs font-medium uppercase tracking-[0.22em] text-charcoal transition-colors hover:bg-charcoal hover:text-white"
+            >
+              Browse on WhatsApp
+            </a>
+          </div>
         </div>
       </div>
     </section>
-  );
-}
-
-function PropertyCard({ property: p }: { property: (typeof properties)[number] }) {
-  return (
-    <article className="group flex flex-col">
-      <div className="relative aspect-[4/3] overflow-hidden bg-muted">
-        <img
-          src={p.image}
-          alt={p.title}
-          loading="lazy"
-          width={1280}
-          height={960}
-          className="h-full w-full object-cover transition-transform duration-[1400ms] ease-out group-hover:scale-[1.03]"
-        />
-        <div className="absolute left-0 top-0 bg-background/95 px-4 py-2">
-          <p className="eyebrow text-[0.6rem]">{p.area}</p>
-        </div>
-      </div>
-
-      <div className="mt-6 flex flex-col">
-        <div className="h-px w-10 bg-ev-red" />
-        <h3 className="mt-5 font-serif text-2xl md:text-3xl">{p.title}</h3>
-        <p className="mt-2 text-sm text-muted-foreground">{p.locationNote}</p>
-
-        <div className="mt-5 flex flex-wrap items-baseline gap-x-5 gap-y-1 text-sm">
-          <span className="font-medium text-charcoal">{p.priceDisplay}</span>
-          <span className="text-muted-foreground">·</span>
-          <span className="text-muted-foreground">{p.bedrooms} bedrooms</span>
-          <span className="text-muted-foreground">·</span>
-          <span className="text-muted-foreground">{p.sizeSqm} m²</span>
-        </div>
-
-        <p className="mt-5 text-[15px] leading-relaxed text-foreground/80">{p.description}</p>
-
-        <div className="mt-7 flex flex-wrap gap-3">
-          <a
-            href="#contact"
-            className="inline-flex items-center gap-2 border border-charcoal px-6 py-3 text-[0.7rem] font-medium uppercase tracking-[0.22em] text-charcoal transition-colors hover:bg-charcoal hover:text-white"
-          >
-            View details
-          </a>
-          <a
-            href={p.whatsappUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 bg-ev-red px-6 py-3 text-[0.7rem] font-medium uppercase tracking-[0.22em] text-white transition-colors hover:bg-ev-red/90"
-          >
-            <WhatsAppIcon className="h-4 w-4" />
-            Enquire on WhatsApp
-          </a>
-        </div>
-      </div>
-    </article>
   );
 }
 
@@ -281,12 +235,10 @@ function About() {
         <div className="md:col-span-5">
           <div className="relative aspect-[4/5] overflow-hidden bg-muted">
             <img
-              src={nigelPortrait}
+              src={nigelPortrait.url}
               alt="Portrait of Nigel Bywater"
               loading="lazy"
-              width={1024}
-              height={1280}
-              className="h-full w-full object-cover"
+              className="h-full w-full object-cover object-top"
             />
           </div>
           <div className="mt-4 h-px w-10 bg-ev-red" />
@@ -306,8 +258,8 @@ function About() {
             </p>
             <p>
               Based on the Cap d'Antibes — perhaps the most coveted peninsula on the Côte d'Azur —
-              Nigel works as a property advisor with Engel &amp; Völkers, offering a curated view of
-              the market and the privacy his clients expect.
+              Nigel works as a property advisor with Engel &amp; Völkers, offering a curated view
+              of the market and the privacy his clients expect.
             </p>
             <p>
               Off duty, you'll find him on one of the region's storied golf courses; an enthusiast
@@ -538,23 +490,9 @@ function FloatingWhatsApp() {
       aria-label="Contact on WhatsApp"
       className="fixed bottom-6 right-6 z-50 grid h-14 w-14 place-items-center rounded-full bg-whatsapp text-white shadow-lg transition-transform hover:scale-105"
     >
-      <WhatsAppIcon className="h-7 w-7" />
+      <svg viewBox="0 0 24 24" fill="currentColor" className="h-7 w-7" aria-hidden>
+        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.198-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.148-.669-1.611-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.096 3.2 5.077 4.487.71.306 1.263.489 1.694.625.712.227 1.36.195 1.872.118.571-.085 1.758-.719 2.006-1.413.247-.694.247-1.289.173-1.413-.074-.124-.272-.198-.57-.347zM12.057 0C5.495 0 .16 5.335.157 11.892c0 2.096.548 4.142 1.588 5.945L0 24l6.305-1.654a11.882 11.882 0 0 0 5.692 1.45h.005c6.555 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413A11.823 11.823 0 0 0 12.057 0zm0 21.785h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.981.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.889-9.884a9.825 9.825 0 0 1 6.99 2.898 9.825 9.825 0 0 1 2.892 6.994c-.003 5.45-4.437 9.885-9.887 9.885z" />
+      </svg>
     </a>
-  );
-}
-
-function WhatsAppIcon({ className = "" }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 24 24" fill="currentColor" className={className} aria-hidden>
-      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.198-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.148-.669-1.611-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.096 3.2 5.077 4.487.71.306 1.263.489 1.694.625.712.227 1.36.195 1.872.118.571-.085 1.758-.719 2.006-1.413.247-.694.247-1.289.173-1.413-.074-.124-.272-.198-.57-.347zM12.057 0C5.495 0 .16 5.335.157 11.892c0 2.096.548 4.142 1.588 5.945L0 24l6.305-1.654a11.882 11.882 0 0 0 5.692 1.45h.005c6.555 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413A11.823 11.823 0 0 0 12.057 0zm0 21.785h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.981.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.889-9.884a9.825 9.825 0 0 1 6.99 2.898 9.825 9.825 0 0 1 2.892 6.994c-.003 5.45-4.437 9.885-9.887 9.885z" />
-    </svg>
-  );
-}
-
-function ArrowRight() {
-  return (
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-      <path d="M5 12h14M13 6l6 6-6 6" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
   );
 }
