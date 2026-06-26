@@ -24,7 +24,7 @@ export function tr<K extends "title" | "description">(
 ): string {
   const suffix = lang.toLowerCase().slice(0, 2);
   if (suffix === "en") return p[key];
-  const localised = (p as Record<string, string | undefined>)[`${key}_${suffix}`];
+  const localised = (p as unknown as Record<string, string | undefined>)[`${key}_${suffix}`];
   return localised && localised.trim().length > 0 ? localised : p[key];
 }
 
