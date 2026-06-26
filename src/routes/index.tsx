@@ -1,8 +1,10 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useState, type FormEvent } from "react";
+import { useEffect, useState, type FormEvent } from "react";
+import { useTranslation } from "react-i18next";
 import heroImage from "@/assets/hero-riviera.jpg";
 import nigelPortrait from "@/assets/nigel-portrait.jpeg.asset.json";
 import { PropertyCard } from "@/components/PropertyCard";
+import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import {
   featuredProperties,
   WHATSAPP_CATALOG_URL,
@@ -32,11 +34,11 @@ export const Route = createFileRoute("/")({
 });
 
 const NAV = [
-  { href: "#properties", label: "Properties" },
-  { href: "#about", label: "About" },
-  { href: "#services", label: "Services" },
-  { href: "#testimonials", label: "Testimonials" },
-  { href: "#contact", label: "Contact" },
+  { href: "#properties", key: "nav.properties" },
+  { href: "#about", key: "nav.about" },
+  { href: "#services", key: "nav.services" },
+  { href: "#testimonials", key: "nav.testimonials" },
+  { href: "#contact", key: "nav.contact" },
 ];
 
 function Home() {
@@ -58,11 +60,27 @@ function Home() {
 }
 
 function Header() {
+  const { t } = useTranslation();
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > window.innerHeight - 80);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  const solid = scrolled || open;
+  const wrapperCls = solid
+    ? "fixed top-0 left-0 right-0 z-40 bg-charcoal shadow-md"
+    : "fixed top-0 left-0 right-0 z-40 bg-transparent";
+  const textCls = "text-white";
+
   return (
-    <header className="absolute top-0 left-0 right-0 z-40">
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-6 md:px-10 md:py-8">
-        <a href="#top" className="flex flex-col leading-tight text-white">
+    <header className={`${wrapperCls} transition-colors duration-300`}>
+      <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5 md:px-10 md:py-6">
+        <a href="#top" className={`flex flex-col leading-tight ${textCls}`}>
           <span className="font-serif text-xl tracking-wide md:text-2xl">Nigel Bywater</span>
           <span className="eyebrow mt-1 text-[0.6rem] text-white/80">Engel &amp; Völkers</span>
         </a>
@@ -73,14 +91,15 @@ function Header() {
               href={item.href}
               className="text-xs font-medium uppercase tracking-[0.22em] text-white/90 transition-colors hover:text-white"
             >
-              {item.label}
+              {t(item.key)}
             </a>
           ))}
+          <LanguageSwitcher variant="light" />
         </nav>
         <button
           className="md:hidden text-white"
           onClick={() => setOpen((v) => !v)}
-          aria-label="Toggle menu"
+          aria-label={t("nav.menuToggle")}
         >
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
             {open ? (
@@ -92,7 +111,7 @@ function Header() {
         </button>
       </div>
       {open && (
-        <div className="md:hidden bg-charcoal/95 backdrop-blur">
+        <div className="md:hidden bg-charcoal">
           <nav className="flex flex-col gap-1 px-6 py-6">
             {NAV.map((item) => (
               <a
@@ -101,9 +120,12 @@ function Header() {
                 onClick={() => setOpen(false)}
                 className="py-3 text-sm uppercase tracking-[0.22em] text-white/90 border-b border-white/10"
               >
-                {item.label}
+                {t(item.key)}
               </a>
             ))}
+            <div className="pt-4">
+              <LanguageSwitcher variant="light" />
+            </div>
           </nav>
         </div>
       )}
@@ -112,38 +134,56 @@ function Header() {
 }
 
 function Hero() {
+  const { t } = useTranslation();
   return (
     <section id="top" className="relative h-[100svh] min-h-[640px] w-full overflow-hidden">
       <img
         src={heroImage}
-        alt="Cap d'Antibes coastline at twilight"
+        alt={t("hero.imageAlt")}
         width={1920}
         height={1280}
         className="absolute inset-0 h-full w-full object-cover"
       />
-      <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-black/60" />
+      {/* Top scrim — keeps nav and wordmark legible */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 top-0 h-[25%]"
+        style={{
+          background:
+            "linear-gradient(to bottom, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0) 100%)",
+        }}
+      />
+      {/* Bottom scrim — seats heading, subtitle and buttons */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 bottom-0 h-[55%]"
+        style={{
+          background:
+            "linear-gradient(to top, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0) 100%)",
+        }}
+      />
       <div className="relative z-10 mx-auto flex h-full max-w-5xl flex-col items-start justify-end px-6 pb-24 md:px-10 md:pb-32">
         <div className="fade-up max-w-3xl text-white">
-          <p className="eyebrow text-white/80">Engel &amp; Völkers · Côte d'Azur</p>
+          <p className="eyebrow text-white/80">{t("hero.eyebrow")}</p>
           <h1 className="mt-6 font-serif text-5xl leading-[1.05] tracking-tight md:text-7xl">
-            Nigel Bywater
+            {t("hero.name")}
           </h1>
           <div className="mt-6 h-px w-12 bg-ev-red" />
-          <p className="mt-6 max-w-xl font-serif text-xl font-light italic text-white/95 md:text-2xl">
-            Luxury property advisor — Cap d'Antibes &amp; the French Riviera, with Engel &amp; Völkers.
+          <p className="mt-6 max-w-xl font-sans text-lg font-light text-white/95 md:text-xl">
+            {t("hero.subtitle")}
           </p>
           <div className="mt-10 flex flex-wrap gap-4">
             <a
               href="#properties"
               className="inline-flex items-center justify-center bg-ev-red px-8 py-4 text-xs font-medium uppercase tracking-[0.22em] text-white transition-colors hover:bg-ev-red/90"
             >
-              View Properties
+              {t("hero.cta1")}
             </a>
             <a
               href="#contact"
               className="inline-flex items-center justify-center border border-white/70 px-8 py-4 text-xs font-medium uppercase tracking-[0.22em] text-white transition-colors hover:bg-white hover:text-charcoal"
             >
-              Speak with Nigel
+              {t("hero.cta2")}
             </a>
           </div>
         </div>
@@ -187,12 +227,12 @@ function SectionHeading({
 }
 
 function Properties() {
+  const { t } = useTranslation();
   return (
     <section id="properties" className="bg-background py-24 md:py-32">
       <div className="mx-auto max-w-7xl px-6 md:px-10">
-        <SectionHeading eyebrow="Featured Properties" title="A curated selection">
-          A discreet portfolio of homes across Cap d'Antibes and the wider Riviera, chosen for
-          their setting, their architecture, and the lives they make possible.
+        <SectionHeading eyebrow={t("properties.eyebrow")} title={t("properties.title")}>
+          {t("properties.intro")}
         </SectionHeading>
 
         <div className="mt-16 grid gap-12 md:grid-cols-2 md:gap-x-10 md:gap-y-16">
@@ -204,14 +244,14 @@ function Properties() {
         <div className="mt-20 flex flex-col items-center text-center">
           <div className="h-px w-12 bg-ev-red" />
           <p className="mt-8 max-w-xl text-base text-muted-foreground">
-            Explore every property currently represented, or browse the live catalogue on WhatsApp.
+            {t("properties.footerNote")}
           </p>
           <div className="mt-6 flex flex-wrap items-center justify-center gap-4">
             <Link
               to="/collection"
               className="inline-flex items-center gap-3 bg-charcoal px-8 py-4 text-xs font-medium uppercase tracking-[0.22em] text-white transition-colors hover:bg-ev-red"
             >
-              View the full collection
+              {t("properties.viewFull")}
             </Link>
             <a
               href={WHATSAPP_CATALOG_URL}
@@ -219,7 +259,7 @@ function Properties() {
               rel="noopener noreferrer"
               className="inline-flex items-center gap-3 border border-charcoal px-8 py-4 text-xs font-medium uppercase tracking-[0.22em] text-charcoal transition-colors hover:bg-charcoal hover:text-white"
             >
-              Browse on WhatsApp
+              {t("properties.browseWhatsApp")}
             </a>
           </div>
         </div>
@@ -229,6 +269,7 @@ function Properties() {
 }
 
 function About() {
+  const { t } = useTranslation();
   return (
     <section id="about" className="bg-cream py-24 md:py-32">
       <div className="mx-auto grid max-w-7xl gap-16 px-6 md:grid-cols-12 md:gap-20 md:px-10">
@@ -236,7 +277,7 @@ function About() {
           <div className="relative aspect-[4/5] overflow-hidden bg-muted">
             <img
               src={nigelPortrait.url}
-              alt="Portrait of Nigel Bywater"
+              alt={t("about.portraitAlt")}
               loading="lazy"
               className="h-full w-full object-cover object-top"
             />
@@ -245,26 +286,18 @@ function About() {
         </div>
 
         <div className="md:col-span-7 md:pt-8">
-          <p className="eyebrow">About Nigel</p>
+          <p className="eyebrow">{t("about.eyebrow")}</p>
           <h2 className="mt-5 font-serif text-4xl tracking-tight md:text-5xl">
-            A trusted hand on the Riviera.
+            {t("about.title")}
           </h2>
           <div className="mt-8 space-y-5 text-[17px] leading-relaxed text-foreground/85">
-            <p>
-              For more than two decades, Nigel Bywater has guided international buyers and sellers
-              through the most discreet addresses on the French Riviera. His practice is built on
-              long-standing relationships, deep local knowledge, and a consultative approach that
-              prizes clarity over haste.
-            </p>
-            <p>
-              Based on the Cap d'Antibes — perhaps the most coveted peninsula on the Côte d'Azur —
-              Nigel works as a property advisor with Engel &amp; Völkers, offering a curated view
-              of the market and the privacy his clients expect.
-            </p>
-            <p>
-              Off duty, you'll find him on one of the region's storied golf courses; an enthusiast
-              of the slower side of Riviera life, and a quiet ambassador for everything it has to
-              offer.
+            <p>{t("about.p1")}</p>
+            <p>{t("about.p2")}</p>
+            <p>{t("about.p3")}</p>
+          </div>
+          <div className="mt-8 border-l-2 border-ev-red pl-5">
+            <p className="text-[15px] italic leading-relaxed text-foreground/80">
+              {t("about.languagesNote")}
             </p>
           </div>
         </div>
@@ -273,35 +306,21 @@ function About() {
   );
 }
 
-const SERVICES = [
-  {
-    title: "Discreet Sourcing",
-    body: "Off-market and pre-launch opportunities, matched to a precise brief and shared privately.",
-  },
-  {
-    title: "Valuations",
-    body: "Considered, evidence-based valuations grounded in current Riviera market activity.",
-  },
-  {
-    title: "End-to-end Guidance",
-    body: "From first visit to signed acte authentique — coordination, negotiation, and follow-through.",
-  },
-  {
-    title: "A Local Network",
-    body: "Notaires, architects, interior designers, concierges — a trusted circle, at your service.",
-  },
-];
-
 function Services() {
+  const { t } = useTranslation();
+  const items = t("services.items", { returnObjects: true }) as {
+    title: string;
+    body: string;
+  }[];
   return (
     <section id="services" className="bg-background py-24 md:py-32">
       <div className="mx-auto max-w-7xl px-6 md:px-10">
-        <SectionHeading eyebrow="Services" title="How I work">
-          A measured, personal service for buyers and sellers of fine property on the Côte d'Azur.
+        <SectionHeading eyebrow={t("services.eyebrow")} title={t("services.title")}>
+          {t("services.intro")}
         </SectionHeading>
 
         <div className="mt-16 grid gap-px bg-border md:grid-cols-2 lg:grid-cols-4">
-          {SERVICES.map((s, i) => (
+          {items.map((s, i) => (
             <div key={s.title} className="bg-background p-8 md:p-10">
               <p className="font-serif text-xl text-ev-red">
                 {String(i + 1).padStart(2, "0")}
@@ -316,41 +335,30 @@ function Services() {
   );
 }
 
-const TESTIMONIALS = [
-  {
-    quote:
-      "Nigel's discretion and judgement were extraordinary. He understood what we were looking for before we did — and found it on Cap d'Antibes.",
-    author: "Private client",
-    place: "London / Antibes",
-  },
-  {
-    quote:
-      "A calm, considered advisor. He guided the entire process with a steadiness that is rare in this market.",
-    author: "Private client",
-    place: "Geneva",
-  },
-  {
-    quote:
-      "He represents the very best of Engel & Völkers on the Riviera. Knowledgeable, connected, and genuinely a pleasure to work with.",
-    author: "Private client",
-    place: "New York / Cannes",
-  },
-];
-
 function Testimonials() {
+  const { t } = useTranslation();
+  const items = t("testimonials.items", { returnObjects: true }) as {
+    quote: string;
+    author: string;
+    place: string;
+  }[];
   return (
     <section id="testimonials" className="bg-cream py-24 md:py-32">
       <div className="mx-auto max-w-6xl px-6 md:px-10">
-        <SectionHeading eyebrow="In Their Words" title="Testimonials" align="center" />
+        <SectionHeading
+          eyebrow={t("testimonials.eyebrow")}
+          title={t("testimonials.title")}
+          align="center"
+        />
         <div className="mt-16 grid gap-10 md:grid-cols-3">
-          {TESTIMONIALS.map((t) => (
-            <figure key={t.author + t.place} className="flex flex-col">
+          {items.map((tt) => (
+            <figure key={tt.author + tt.place} className="flex flex-col">
               <div className="h-px w-8 bg-ev-red" />
               <blockquote className="mt-6 font-serif text-xl italic leading-relaxed text-foreground/90 md:text-[1.4rem]">
-                "{t.quote}"
+                "{tt.quote}"
               </blockquote>
               <figcaption className="mt-6 text-xs uppercase tracking-[0.22em] text-muted-foreground">
-                {t.author} · {t.place}
+                {tt.author} · {tt.place}
               </figcaption>
             </figure>
           ))}
@@ -361,6 +369,7 @@ function Testimonials() {
 }
 
 function Contact() {
+  const { t } = useTranslation();
   const [sent, setSent] = useState(false);
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -370,18 +379,22 @@ function Contact() {
     <section id="contact" className="bg-background py-24 md:py-32">
       <div className="mx-auto grid max-w-7xl gap-16 px-6 md:grid-cols-2 md:gap-20 md:px-10">
         <div>
-          <p className="eyebrow">Contact</p>
+          <p className="eyebrow">{t("contact.eyebrow")}</p>
           <h2 className="mt-5 font-serif text-4xl tracking-tight md:text-5xl red-rule">
-            Begin the conversation.
+            {t("contact.title")}
           </h2>
           <p className="mt-8 max-w-md text-base leading-relaxed text-muted-foreground">
-            Whether you are considering a purchase, a discreet sale, or simply a perspective on
-            the market — I would be delighted to speak with you.
+            {t("contact.intro")}
+          </p>
+          <p className="mt-5 max-w-md text-[15px] italic leading-relaxed text-foreground/75">
+            {t("contact.languagesNote")}
           </p>
 
           <dl className="mt-10 space-y-6 text-sm">
             <div>
-              <dt className="eyebrow text-[0.6rem] text-muted-foreground">WhatsApp</dt>
+              <dt className="eyebrow text-[0.6rem] text-muted-foreground">
+                {t("contact.whatsapp")}
+              </dt>
               <dd className="mt-2">
                 <a
                   href={WHATSAPP_DIRECT_URL}
@@ -394,7 +407,9 @@ function Contact() {
               </dd>
             </div>
             <div>
-              <dt className="eyebrow text-[0.6rem] text-muted-foreground">Email</dt>
+              <dt className="eyebrow text-[0.6rem] text-muted-foreground">
+                {t("contact.email")}
+              </dt>
               <dd className="mt-2">
                 <a
                   href="mailto:nigel.bywater@engelvoelkers.com"
@@ -405,7 +420,7 @@ function Contact() {
               </dd>
             </div>
             <div>
-              <dt className="eyebrow text-[0.6rem] text-muted-foreground">Engel &amp; Völkers</dt>
+              <dt className="eyebrow text-[0.6rem] text-muted-foreground">{t("contact.ev")}</dt>
               <dd className="mt-2">
                 <a
                   href="https://www.engelvoelkers.com/"
@@ -413,7 +428,7 @@ function Contact() {
                   rel="noopener noreferrer"
                   className="text-base text-charcoal underline-offset-4 hover:underline"
                 >
-                  View advisor profile →
+                  {t("contact.evLink")}
                 </a>
               </dd>
             </div>
@@ -421,14 +436,14 @@ function Contact() {
         </div>
 
         <form onSubmit={onSubmit} className="flex flex-col gap-6">
-          <Field label="Name" name="name" required />
-          <Field label="Email" name="email" type="email" required />
-          <Field label="Message" name="message" textarea required />
+          <Field label={t("contact.form.name")} name="name" required />
+          <Field label={t("contact.form.email")} name="email" type="email" required />
+          <Field label={t("contact.form.message")} name="message" textarea required />
           <button
             type="submit"
             className="mt-2 inline-flex items-center justify-center bg-charcoal px-8 py-4 text-xs font-medium uppercase tracking-[0.22em] text-white transition-colors hover:bg-ev-red"
           >
-            {sent ? "Thank you — I will be in touch." : "Send message"}
+            {sent ? t("contact.form.sent") : t("contact.form.send")}
           </button>
         </form>
       </div>
@@ -464,30 +479,33 @@ function Field({
 }
 
 function Footer() {
+  const { t } = useTranslation();
   return (
     <footer className="border-t border-border bg-background py-12">
       <div className="mx-auto flex max-w-7xl flex-col items-start justify-between gap-6 px-6 md:flex-row md:items-center md:px-10">
         <div>
           <p className="font-serif text-lg">Nigel Bywater</p>
-          <p className="eyebrow mt-2 text-[0.6rem] text-muted-foreground">
-            Property Advisor · Engel &amp; Völkers
+          <p className="eyebrow mt-2 text-[0.6rem] text-muted-foreground">{t("footer.role")}</p>
+        </div>
+        <div className="flex flex-col items-start gap-4 md:flex-row md:items-center md:gap-8">
+          <LanguageSwitcher variant="dark" />
+          <p className="text-xs text-muted-foreground">
+            © {new Date().getFullYear()} Nigel Bywater. {t("footer.rights")}
           </p>
         </div>
-        <p className="text-xs text-muted-foreground">
-          © {new Date().getFullYear()} Nigel Bywater. All rights reserved.
-        </p>
       </div>
     </footer>
   );
 }
 
 function FloatingWhatsApp() {
+  const { t } = useTranslation();
   return (
     <a
       href={WHATSAPP_DIRECT_URL}
       target="_blank"
       rel="noopener noreferrer"
-      aria-label="Contact on WhatsApp"
+      aria-label={t("whatsappAria")}
       className="fixed bottom-6 right-6 z-50 grid h-14 w-14 place-items-center rounded-full bg-whatsapp text-white shadow-lg transition-transform hover:scale-105"
     >
       <svg viewBox="0 0 24 24" fill="currentColor" className="h-7 w-7" aria-hidden>

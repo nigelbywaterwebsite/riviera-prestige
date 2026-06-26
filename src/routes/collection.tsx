@@ -1,5 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useTranslation } from "react-i18next";
 import { PropertyCard } from "@/components/PropertyCard";
+import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import { properties, WHATSAPP_CATALOG_URL } from "@/data/properties";
 
 export const Route = createFileRoute("/collection")({
@@ -17,6 +19,7 @@ export const Route = createFileRoute("/collection")({
 });
 
 function CollectionPage() {
+  const { t } = useTranslation();
   return (
     <div className="min-h-screen bg-background text-foreground">
       <header className="border-b border-border">
@@ -25,23 +28,25 @@ function CollectionPage() {
             <span className="font-serif text-xl tracking-wide md:text-2xl">Nigel Bywater</span>
             <span className="eyebrow mt-1 text-[0.6rem]">Engel &amp; Völkers</span>
           </Link>
-          <Link
-            to="/"
-            className="text-xs font-medium uppercase tracking-[0.22em] text-charcoal hover:text-ev-red"
-          >
-            ← Back
-          </Link>
+          <div className="flex items-center gap-8">
+            <LanguageSwitcher variant="dark" />
+            <Link
+              to="/"
+              className="text-xs font-medium uppercase tracking-[0.22em] text-charcoal hover:text-ev-red"
+            >
+              {t("collection.back")}
+            </Link>
+          </div>
         </div>
       </header>
 
       <main className="mx-auto max-w-7xl px-6 py-20 md:px-10 md:py-28">
-        <p className="eyebrow">The Collection</p>
+        <p className="eyebrow">{t("collection.eyebrow")}</p>
         <h1 className="mt-5 font-serif text-4xl tracking-tight md:text-6xl red-rule">
-          Every available property
+          {t("collection.title")}
         </h1>
         <p className="mt-8 max-w-2xl text-base leading-relaxed text-muted-foreground">
-          The complete selection of homes currently represented by Nigel, from waterfront estates
-          on Cap d'Antibes to refined apartments in Cannes and the surrounding hills.
+          {t("collection.intro")}
         </p>
 
         <div className="mt-16 grid gap-12 md:grid-cols-2 md:gap-x-10 md:gap-y-16">
@@ -58,7 +63,7 @@ function CollectionPage() {
             rel="noopener noreferrer"
             className="mt-8 inline-flex items-center gap-3 border border-charcoal px-8 py-4 text-xs font-medium uppercase tracking-[0.22em] text-charcoal transition-colors hover:bg-charcoal hover:text-white"
           >
-            Browse the full collection on WhatsApp
+            {t("collection.browseWhatsApp")}
           </a>
         </div>
       </main>
