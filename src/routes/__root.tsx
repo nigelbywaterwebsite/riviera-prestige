@@ -11,6 +11,8 @@ import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
+import "../i18n";
+import { initClientLanguage } from "../i18n";
 
 function NotFoundComponent() {
   return (
@@ -118,6 +120,10 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+
+  useEffect(() => {
+    initClientLanguage();
+  }, []);
 
   return (
     <QueryClientProvider client={queryClient}>
