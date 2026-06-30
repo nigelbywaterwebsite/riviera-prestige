@@ -123,22 +123,15 @@ function Hero() {
   const { t } = useTranslation();
   return (
     <section id="top" className="relative h-[100svh] min-h-[640px] w-full overflow-hidden">
-      <img
-        src={heroImage}
-        alt={t("hero.imageAlt")}
-        width={1920}
-        height={1280}
-        className="absolute inset-0 h-full w-full object-cover"
-      />
-      {/* Top scrim — keeps nav legible over bright sky */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-x-0 top-0 h-[35%]"
-        style={{
-          background:
-            "linear-gradient(to bottom, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0) 100%)",
-        }}
-      />
+      <div className="absolute top-20 left-0 right-0 bottom-0">
+        <img
+          src={heroImage}
+          alt={t("hero.imageAlt")}
+          width={1920}
+          height={1280}
+          className="h-full w-full object-cover"
+        />
+      </div>
       {/* Bottom scrim — seats heading, subtitle and buttons */}
       <div
         aria-hidden
@@ -151,7 +144,7 @@ function Hero() {
       {/* Soft left-side vignette to anchor headline copy */}
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-y-0 left-0 w-full md:w-2/3"
+        className="pointer-events-none absolute top-20 left-0 bottom-0 w-full md:w-2/3"
         style={{
           background:
             "linear-gradient(to right, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0) 70%)",
