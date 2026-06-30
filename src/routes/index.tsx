@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useEffect, useState, type FormEvent } from "react";
+import { useState, type FormEvent } from "react";
 import { useTranslation } from "react-i18next";
 const heroImage = "/images/hero-cap-antibes.jpg";
 const nigelPortraitUrl = "/images/nigel-portrait.jpeg";
@@ -62,25 +62,11 @@ function Home() {
 function Header() {
   const { t } = useTranslation();
   const [open, setOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
-
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > window.innerHeight - 80);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
-  const solid = scrolled || open;
-  const wrapperCls = solid
-    ? "fixed top-0 left-0 right-0 z-40 bg-charcoal shadow-md"
-    : "fixed top-0 left-0 right-0 z-40 bg-transparent";
-  const textCls = "text-white";
 
   return (
-    <header className={`${wrapperCls} transition-colors duration-300`}>
+    <header className="fixed top-0 left-0 right-0 z-40 bg-charcoal border-b border-white/10 shadow-sm">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5 md:px-10 md:py-6">
-        <a href="#top" className={`flex flex-col leading-tight ${textCls}`}>
+        <a href="#top" className="flex flex-col leading-tight text-white">
           <span className="font-serif text-xl tracking-wide md:text-2xl">Nigel Bywater</span>
           <span className="eyebrow mt-1 text-[0.6rem] text-white/80">Engel &amp; Völkers</span>
         </a>
@@ -89,7 +75,7 @@ function Header() {
             <a
               key={item.href}
               href={item.href}
-              className="text-xs font-medium uppercase tracking-[0.22em] text-white/90 transition-colors hover:text-white"
+              className="text-xs font-medium uppercase tracking-[0.22em] text-white/90 transition-colors hover:text-ev-red"
             >
               {t(item.key)}
             </a>
@@ -111,14 +97,14 @@ function Header() {
         </button>
       </div>
       {open && (
-        <div className="md:hidden bg-charcoal">
+        <div className="md:hidden bg-charcoal border-t border-white/10">
           <nav className="flex flex-col gap-1 px-6 py-6">
             {NAV.map((item) => (
               <a
                 key={item.href}
                 href={item.href}
                 onClick={() => setOpen(false)}
-                className="py-3 text-sm uppercase tracking-[0.22em] text-white/90 border-b border-white/10"
+                className="py-3 text-sm uppercase tracking-[0.22em] text-white/90 border-b border-white/10 transition-colors hover:text-ev-red"
               >
                 {t(item.key)}
               </a>
@@ -137,22 +123,15 @@ function Hero() {
   const { t } = useTranslation();
   return (
     <section id="top" className="relative h-[100svh] min-h-[640px] w-full overflow-hidden">
-      <img
-        src={heroImage}
-        alt={t("hero.imageAlt")}
-        width={1920}
-        height={1280}
-        className="absolute inset-0 h-full w-full object-cover"
-      />
-      {/* Top scrim — keeps nav legible over bright sky */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-x-0 top-0 h-[35%]"
-        style={{
-          background:
-            "linear-gradient(to bottom, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0) 100%)",
-        }}
-      />
+      <div className="absolute top-20 left-0 right-0 bottom-0">
+        <img
+          src={heroImage}
+          alt={t("hero.imageAlt")}
+          width={1920}
+          height={1280}
+          className="h-full w-full object-cover"
+        />
+      </div>
       {/* Bottom scrim — seats heading, subtitle and buttons */}
       <div
         aria-hidden
@@ -165,7 +144,7 @@ function Hero() {
       {/* Soft left-side vignette to anchor headline copy */}
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-y-0 left-0 w-full md:w-2/3"
+        className="pointer-events-none absolute top-20 left-0 bottom-0 w-full md:w-2/3"
         style={{
           background:
             "linear-gradient(to right, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0) 70%)",
