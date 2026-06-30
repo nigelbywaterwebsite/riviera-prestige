@@ -288,7 +288,7 @@ function About() {
         <div className="md:col-span-5">
           <div className="relative aspect-[4/5] overflow-hidden bg-muted">
             <img
-              src={nigelPortrait.url}
+              src={nigelPortraitUrl}
               alt={t("about.portraitAlt")}
               loading="lazy"
               className="h-full w-full object-cover object-top"
