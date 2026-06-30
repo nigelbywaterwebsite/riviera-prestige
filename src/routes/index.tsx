@@ -1,9 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState, type FormEvent } from "react";
 import { useTranslation } from "react-i18next";
-import heroAsset from "@/assets/hero-cap-antibes.jpg.asset.json";
-const heroImage = heroAsset.url;
-import nigelPortrait from "@/assets/nigel-portrait.jpeg.asset.json";
+const heroImage = "/images/hero-cap-antibes.jpg";
+const nigelPortraitUrl = "/images/nigel-portrait.jpeg";
 import { PropertyCard } from "@/components/PropertyCard";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import {
