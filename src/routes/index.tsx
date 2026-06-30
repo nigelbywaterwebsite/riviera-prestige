@@ -62,25 +62,11 @@ function Home() {
 function Header() {
   const { t } = useTranslation();
   const [open, setOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
-
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > window.innerHeight - 80);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
-  const solid = scrolled || open;
-  const wrapperCls = solid
-    ? "fixed top-0 left-0 right-0 z-40 bg-charcoal shadow-md"
-    : "fixed top-0 left-0 right-0 z-40 bg-transparent";
-  const textCls = "text-white";
 
   return (
-    <header className={`${wrapperCls} transition-colors duration-300`}>
+    <header className="fixed top-0 left-0 right-0 z-40 bg-charcoal border-b border-white/10 shadow-sm">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5 md:px-10 md:py-6">
-        <a href="#top" className={`flex flex-col leading-tight ${textCls}`}>
+        <a href="#top" className="flex flex-col leading-tight text-white">
           <span className="font-serif text-xl tracking-wide md:text-2xl">Nigel Bywater</span>
           <span className="eyebrow mt-1 text-[0.6rem] text-white/80">Engel &amp; Völkers</span>
         </a>
@@ -89,7 +75,7 @@ function Header() {
             <a
               key={item.href}
               href={item.href}
-              className="text-xs font-medium uppercase tracking-[0.22em] text-white/90 transition-colors hover:text-white"
+              className="text-xs font-medium uppercase tracking-[0.22em] text-white/90 transition-colors hover:text-ev-red"
             >
               {t(item.key)}
             </a>
@@ -111,14 +97,14 @@ function Header() {
         </button>
       </div>
       {open && (
-        <div className="md:hidden bg-charcoal">
+        <div className="md:hidden bg-charcoal border-t border-white/10">
           <nav className="flex flex-col gap-1 px-6 py-6">
             {NAV.map((item) => (
               <a
                 key={item.href}
                 href={item.href}
                 onClick={() => setOpen(false)}
-                className="py-3 text-sm uppercase tracking-[0.22em] text-white/90 border-b border-white/10"
+                className="py-3 text-sm uppercase tracking-[0.22em] text-white/90 border-b border-white/10 transition-colors hover:text-ev-red"
               >
                 {t(item.key)}
               </a>
