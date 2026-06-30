@@ -1,7 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState, type FormEvent } from "react";
 import { useTranslation } from "react-i18next";
-import heroImage from "@/assets/hero-riviera.jpg";
+import heroAsset from "@/assets/hero-cap-antibes.jpg.asset.json";
+const heroImage = heroAsset.url;
 import nigelPortrait from "@/assets/nigel-portrait.jpeg.asset.json";
 import { PropertyCard } from "@/components/PropertyCard";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
@@ -144,27 +145,39 @@ function Hero() {
         height={1280}
         className="absolute inset-0 h-full w-full object-cover"
       />
-      {/* Top scrim — keeps nav and wordmark legible */}
+      {/* Top scrim — keeps nav legible over bright sky */}
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-x-0 top-0 h-[25%]"
+        className="pointer-events-none absolute inset-x-0 top-0 h-[35%]"
         style={{
           background:
-            "linear-gradient(to bottom, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0) 100%)",
+            "linear-gradient(to bottom, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0) 100%)",
         }}
       />
       {/* Bottom scrim — seats heading, subtitle and buttons */}
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-x-0 bottom-0 h-[55%]"
+        className="pointer-events-none absolute inset-x-0 bottom-0 h-[65%]"
         style={{
           background:
-            "linear-gradient(to top, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0) 100%)",
+            "linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.25) 55%, rgba(0,0,0,0) 100%)",
+        }}
+      />
+      {/* Soft left-side vignette to anchor headline copy */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-y-0 left-0 w-full md:w-2/3"
+        style={{
+          background:
+            "linear-gradient(to right, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0) 70%)",
         }}
       />
       <div className="relative z-10 mx-auto flex h-full max-w-5xl flex-col items-start justify-end px-6 pb-24 md:px-10 md:pb-32">
-        <div className="fade-up max-w-3xl text-white">
-          <p className="eyebrow text-white/80">{t("hero.eyebrow")}</p>
+        <div
+          className="fade-up max-w-3xl text-white"
+          style={{ textShadow: "0 1px 24px rgba(0,0,0,0.45)" }}
+        >
+          <p className="eyebrow text-white/85">{t("hero.eyebrow")}</p>
           <h1 className="mt-6 font-serif text-5xl leading-[1.05] tracking-tight md:text-7xl">
             {t("hero.name")}
           </h1>
@@ -175,13 +188,13 @@ function Hero() {
           <div className="mt-10 flex flex-wrap gap-4">
             <a
               href="#properties"
-              className="inline-flex items-center justify-center bg-ev-red px-8 py-4 text-xs font-medium uppercase tracking-[0.22em] text-white transition-colors hover:bg-ev-red/90"
+              className="inline-flex items-center justify-center bg-ev-red px-8 py-4 text-xs font-medium uppercase tracking-[0.22em] text-white shadow-lg transition-colors hover:bg-ev-red/90"
             >
               {t("hero.cta1")}
             </a>
             <a
               href="#contact"
-              className="inline-flex items-center justify-center border border-white/70 px-8 py-4 text-xs font-medium uppercase tracking-[0.22em] text-white transition-colors hover:bg-white hover:text-charcoal"
+              className="inline-flex items-center justify-center border border-white/80 bg-white/5 px-8 py-4 text-xs font-medium uppercase tracking-[0.22em] text-white backdrop-blur-[2px] transition-colors hover:bg-white hover:text-charcoal"
             >
               {t("hero.cta2")}
             </a>
