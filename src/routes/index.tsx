@@ -132,38 +132,46 @@ function Hero() {
           className="h-full w-full object-cover"
         />
       </div>
-      {/* Bottom scrim — seats heading, subtitle and buttons */}
+      {/* Diagonal scrim — darker at lower-left where the copy sits, fading toward upper-right */}
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-x-0 bottom-0 h-[65%]"
+        className="pointer-events-none absolute top-20 left-0 right-0 bottom-0"
         style={{
           background:
-            "linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.25) 55%, rgba(0,0,0,0) 100%)",
+            "linear-gradient(to top right, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.55) 25%, rgba(0,0,0,0.2) 55%, rgba(0,0,0,0) 75%)",
         }}
       />
-      {/* Soft left-side vignette to anchor headline copy */}
+      {/* Gentle bottom-up wash for extra seat under the buttons */}
       <div
         aria-hidden
-        className="pointer-events-none absolute top-20 left-0 bottom-0 w-full md:w-2/3"
+        className="pointer-events-none absolute inset-x-0 bottom-0 h-[60%]"
         style={{
           background:
-            "linear-gradient(to right, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0) 70%)",
+            "linear-gradient(to top, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.15) 45%, rgba(0,0,0,0) 100%)",
         }}
       />
-      <div className="relative z-10 mx-auto flex h-full max-w-5xl flex-col items-start justify-end px-6 pb-24 md:px-10 md:pb-32">
-        <div
-          className="fade-up max-w-3xl text-white"
-          style={{ textShadow: "0 1px 24px rgba(0,0,0,0.45)" }}
-        >
-          <p className="eyebrow text-white/85">{t("hero.eyebrow")}</p>
-          <h1 className="mt-6 font-serif text-5xl leading-[1.05] tracking-tight md:text-7xl">
+      <div className="relative z-10 mx-auto flex h-full max-w-7xl flex-col justify-end px-6 pt-28 pb-20 md:px-10 md:pb-28 lg:pb-32">
+        <div className="fade-up max-w-2xl text-white">
+          <p
+            className="eyebrow font-medium text-white"
+            style={{ textShadow: "0 1px 8px rgba(0,0,0,0.6)" }}
+          >
+            {t("hero.eyebrow")}
+          </p>
+          <h1
+            className="mt-6 font-serif text-5xl leading-[1.05] tracking-tight md:text-6xl lg:text-7xl"
+            style={{ textShadow: "0 2px 14px rgba(0,0,0,0.55)" }}
+          >
             {t("hero.name")}
           </h1>
           <div className="mt-6 h-px w-12 bg-ev-red" />
-          <p className="mt-6 max-w-xl font-sans text-lg font-light text-white/95 md:text-xl">
+          <p
+            className="mt-6 max-w-xl font-sans text-base font-light text-white/95 md:text-lg lg:text-xl"
+            style={{ textShadow: "0 2px 12px rgba(0,0,0,0.55)" }}
+          >
             {t("hero.subtitle")}
           </p>
-          <div className="mt-10 flex flex-wrap gap-4">
+          <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4">
             <a
               href="#properties"
               className="inline-flex items-center justify-center bg-ev-red px-8 py-4 text-xs font-medium uppercase tracking-[0.22em] text-white shadow-lg transition-colors hover:bg-ev-red/90"
