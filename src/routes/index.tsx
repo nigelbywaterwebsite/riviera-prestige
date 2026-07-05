@@ -1,15 +1,10 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import { useState, type FormEvent } from "react";
 import { useTranslation } from "react-i18next";
 const heroImage = "/images/hero-cap-antibes.jpg";
 const nigelPortraitUrl = "/images/nigel-portrait.jpeg";
-import { PropertyCard } from "@/components/PropertyCard";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
-import {
-  featuredProperties,
-  WHATSAPP_CATALOG_URL,
-  WHATSAPP_DIRECT_URL,
-} from "@/data/properties";
+import { WHATSAPP_DIRECT_URL } from "@/data/properties";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -34,7 +29,6 @@ export const Route = createFileRoute("/")({
 });
 
 const NAV = [
-  { href: "#properties", key: "nav.properties" },
   { href: "#about", key: "nav.about" },
   { href: "#services", key: "nav.services" },
   { href: "#testimonials", key: "nav.testimonials" },
@@ -47,7 +41,6 @@ function Home() {
       <Header />
       <main>
         <Hero />
-        <Properties />
         <About />
         <Services />
         <Testimonials />
@@ -173,7 +166,7 @@ function Hero() {
           </p>
           <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4">
             <a
-              href="#properties"
+              href="#contact"
               className="inline-flex items-center justify-center bg-ev-red px-8 py-4 text-xs font-medium uppercase tracking-[0.22em] text-white shadow-lg transition-colors hover:bg-ev-red/90"
             >
               {t("hero.cta1")}
@@ -225,47 +218,6 @@ function SectionHeading({
   );
 }
 
-function Properties() {
-  const { t } = useTranslation();
-  return (
-    <section id="properties" className="bg-background py-24 md:py-32">
-      <div className="mx-auto max-w-7xl px-6 md:px-10">
-        <SectionHeading eyebrow={t("properties.eyebrow")} title={t("properties.title")}>
-          {t("properties.intro")}
-        </SectionHeading>
-
-        <div className="mt-16 grid gap-12 md:grid-cols-2 md:gap-x-10 md:gap-y-16">
-          {featuredProperties.map((p) => (
-            <PropertyCard key={p.slug} property={p} />
-          ))}
-        </div>
-
-        <div className="mt-20 flex flex-col items-center text-center">
-          <div className="h-px w-12 bg-ev-red" />
-          <p className="mt-8 max-w-xl text-base text-muted-foreground">
-            {t("properties.footerNote")}
-          </p>
-          <div className="mt-6 flex flex-wrap items-center justify-center gap-4">
-            <Link
-              to="/collection"
-              className="inline-flex items-center gap-3 bg-charcoal px-8 py-4 text-xs font-medium uppercase tracking-[0.22em] text-white transition-colors hover:bg-ev-red"
-            >
-              {t("properties.viewFull")}
-            </Link>
-            <a
-              href={WHATSAPP_CATALOG_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-3 border border-charcoal px-8 py-4 text-xs font-medium uppercase tracking-[0.22em] text-charcoal transition-colors hover:bg-charcoal hover:text-white"
-            >
-              {t("properties.browseWhatsApp")}
-            </a>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
 
 function About() {
   const { t } = useTranslation();
