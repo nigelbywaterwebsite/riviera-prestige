@@ -68,25 +68,6 @@ export function PropertyCard({ property: p }: { property: Property }) {
           {description}
         </p>
 
-        <div className="mt-7 flex flex-wrap gap-3">
-          <a
-            href={p.whatsappUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 border border-charcoal px-6 py-3 text-[0.7rem] font-medium uppercase tracking-[0.22em] text-charcoal transition-colors hover:bg-charcoal hover:text-white"
-          >
-            {t("card.viewDetails")}
-          </a>
-          <a
-            href={p.whatsappUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 bg-ev-red px-6 py-3 text-[0.7rem] font-medium uppercase tracking-[0.22em] text-white transition-colors hover:bg-ev-red/90"
-          >
-            <WhatsAppIcon className="h-4 w-4" />
-            {t("card.enquire")}
-          </a>
-        </div>
       </div>
     </article>
   );
