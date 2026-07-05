@@ -1,8 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
-import { PropertyCard } from "@/components/PropertyCard";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
-import { properties, WHATSAPP_CATALOG_URL } from "@/data/properties";
 
 export const Route = createFileRoute("/collection")({
   head: () => ({
@@ -11,7 +9,7 @@ export const Route = createFileRoute("/collection")({
       {
         name: "description",
         content:
-          "The full curated collection of luxury properties offered by Nigel Bywater on the Cap d'Antibes and the French Riviera.",
+          "A new curated collection of luxury properties from Nigel Bywater on the Cap d'Antibes and the French Riviera is coming soon.",
       },
     ],
   }),
@@ -40,32 +38,22 @@ function CollectionPage() {
         </div>
       </header>
 
-      <main className="mx-auto max-w-7xl px-6 py-20 md:px-10 md:py-28">
+      <main className="mx-auto flex max-w-3xl flex-col items-center px-6 py-32 text-center md:px-10 md:py-40">
         <p className="eyebrow">{t("collection.eyebrow")}</p>
-        <h1 className="mt-5 font-serif text-4xl tracking-tight md:text-6xl red-rule">
-          {t("collection.title")}
+        <h1 className="mt-5 font-serif text-4xl tracking-tight md:text-6xl">
+          New collection coming soon
         </h1>
-        <p className="mt-8 max-w-2xl text-base leading-relaxed text-muted-foreground">
-          {t("collection.intro")}
+        <div className="mt-8 h-px w-12 bg-ev-red" />
+        <p className="mt-8 max-w-xl text-base leading-relaxed text-muted-foreground">
+          A new curated selection of properties is being prepared. Please check back shortly, or get
+          in touch directly to discuss your requirements.
         </p>
-
-        <div className="mt-16 grid gap-12 md:grid-cols-2 md:gap-x-10 md:gap-y-16">
-          {properties.map((p) => (
-            <PropertyCard key={p.slug} property={p} />
-          ))}
-        </div>
-
-        <div className="mt-24 flex flex-col items-center text-center">
-          <div className="h-px w-12 bg-ev-red" />
-          <a
-            href={WHATSAPP_CATALOG_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="mt-8 inline-flex items-center gap-3 border border-charcoal px-8 py-4 text-xs font-medium uppercase tracking-[0.22em] text-charcoal transition-colors hover:bg-charcoal hover:text-white"
-          >
-            {t("collection.browseWhatsApp")}
-          </a>
-        </div>
+        <Link
+          to="/"
+          className="mt-10 inline-flex items-center gap-3 bg-charcoal px-8 py-4 text-xs font-medium uppercase tracking-[0.22em] text-white transition-colors hover:bg-ev-red"
+        >
+          {t("collection.back")}
+        </Link>
       </main>
     </div>
   );
