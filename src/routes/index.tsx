@@ -145,7 +145,7 @@ function Header() {
 function Hero() {
   const { t } = useTranslation();
   return (
-    <section id="top" className="relative h-[72svh] min-h-[540px] w-full overflow-hidden">
+    <section id="top" className="relative h-[58svh] min-h-[460px] w-full overflow-hidden">
       <div className="absolute top-20 left-0 right-0 bottom-0">
         <img
           src={heroImage}
