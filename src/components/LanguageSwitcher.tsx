@@ -2,11 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { SUPPORTED_LANGUAGES, setLanguage, type LangCode } from "@/i18n";
 
-export function LanguageSwitcher({
-  variant = "light",
-}: {
-  variant?: "light" | "dark";
-}) {
+export function LanguageSwitcher({ variant = "light" }: { variant?: "light" | "dark" }) {
   const { i18n } = useTranslation();
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
@@ -23,9 +19,7 @@ export function LanguageSwitcher({
     SUPPORTED_LANGUAGES.find((l) => l.code === i18n.language) ?? SUPPORTED_LANGUAGES[0];
 
   const triggerCls =
-    variant === "light"
-      ? "text-white/90 hover:text-white"
-      : "text-charcoal hover:text-ev-red";
+    variant === "light" ? "text-white/90 hover:text-white" : "text-charcoal hover:text-ev-red";
 
   return (
     <div ref={ref} className="relative">
@@ -37,7 +31,15 @@ export function LanguageSwitcher({
         aria-expanded={open}
       >
         <span>{current.code.toUpperCase()}</span>
-        <svg width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden>
+        <svg
+          width="10"
+          height="10"
+          viewBox="0 0 12 12"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.5"
+          aria-hidden
+        >
           <path d="M3 4.5l3 3 3-3" strokeLinecap="round" />
         </svg>
       </button>

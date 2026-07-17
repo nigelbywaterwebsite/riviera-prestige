@@ -1,10 +1,31 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState, type FormEvent } from "react";
 import { useTranslation } from "react-i18next";
 const heroImage = "/images/hero-cap-antibes.jpg";
 const nigelPortraitUrl = "/images/nigel-portrait.jpeg";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
-import { WHATSAPP_DIRECT_URL } from "@/data/properties";
+import { SITE_URL, WHATSAPP_DIRECT_URL } from "@/data/site";
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "RealEstateAgent",
+  name: "Nigel Bywater",
+  url: SITE_URL,
+  image: `${SITE_URL}/images/nigel-portrait.jpeg`,
+  description:
+    "Property advisor with Engel & Völkers, specialising in luxury homes on Cap d'Antibes and across the French Riviera.",
+  email: "nigel.bywater@engelvoelkers.com",
+  telephone: "+33652616860",
+  areaServed: ["Cap d'Antibes", "Antibes", "Cannes", "French Riviera"],
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: "Antibes",
+    addressRegion: "Provence-Alpes-Côte d'Azur",
+    addressCountry: "FR",
+  },
+  memberOf: { "@type": "Organization", name: "Engel & Völkers" },
+  knowsLanguage: ["en", "fr"],
+};
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -21,9 +42,11 @@ export const Route = createFileRoute("/")({
         content:
           "Curated luxury properties on Cap d'Antibes and the French Riviera, with Engel & Völkers.",
       },
-      { property: "og:type", content: "website" },
-      { property: "og:image", content: heroImage },
+      { property: "og:url", content: `${SITE_URL}/` },
+      { property: "og:image", content: `${SITE_URL}${heroImage}` },
     ],
+    links: [{ rel: "canonical", href: `${SITE_URL}/` }],
+    scripts: [{ type: "application/ld+json", children: JSON.stringify(jsonLd) }],
   }),
   component: Home,
 });
@@ -80,7 +103,14 @@ function Header() {
           onClick={() => setOpen((v) => !v)}
           aria-label={t("nav.menuToggle")}
         >
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.5"
+          >
             {open ? (
               <path d="M6 6l12 12M18 6L6 18" strokeLinecap="round" />
             ) : (
@@ -165,12 +195,12 @@ function Hero() {
             {t("hero.subtitle")}
           </p>
           <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4">
-            <a
-              href="#contact"
+            <Link
+              to="/collection"
               className="inline-flex items-center justify-center bg-ev-red px-8 py-4 text-xs font-medium uppercase tracking-[0.22em] text-white shadow-lg transition-colors hover:bg-ev-red/90"
             >
               {t("hero.cta1")}
-            </a>
+            </Link>
             <a
               href="#contact"
               className="inline-flex items-center justify-center border border-white/80 bg-white/5 px-8 py-4 text-xs font-medium uppercase tracking-[0.22em] text-white backdrop-blur-[2px] transition-colors hover:bg-white hover:text-charcoal"
@@ -217,7 +247,6 @@ function SectionHeading({
     </div>
   );
 }
-
 
 function About() {
   const { t } = useTranslation();
@@ -273,9 +302,7 @@ function Services() {
         <div className="mt-16 grid gap-px bg-border md:grid-cols-2 lg:grid-cols-4">
           {items.map((s, i) => (
             <div key={s.title} className="bg-background p-8 md:p-10">
-              <p className="font-serif text-xl text-ev-red">
-                {String(i + 1).padStart(2, "0")}
-              </p>
+              <p className="font-serif text-xl text-ev-red">{String(i + 1).padStart(2, "0")}</p>
               <h3 className="mt-4 font-serif text-2xl">{s.title}</h3>
               <p className="mt-4 text-[15px] leading-relaxed text-foreground/75">{s.body}</p>
             </div>
@@ -358,9 +385,7 @@ function Contact() {
               </dd>
             </div>
             <div>
-              <dt className="eyebrow text-[0.6rem] text-muted-foreground">
-                {t("contact.email")}
-              </dt>
+              <dt className="eyebrow text-[0.6rem] text-muted-foreground">{t("contact.email")}</dt>
               <dd className="mt-2">
                 <a
                   href="mailto:nigel.bywater@engelvoelkers.com"

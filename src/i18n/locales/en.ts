@@ -1,6 +1,5 @@
-export default {
+const en = {
   nav: {
-    properties: "Properties",
     about: "About",
     services: "Services",
     testimonials: "Testimonials",
@@ -10,27 +9,10 @@ export default {
   hero: {
     eyebrow: "Engel & Völkers · Côte d'Azur",
     name: "Nigel Bywater",
-    subtitle:
-      "Luxury property advisor — Cap d'Antibes & the French Riviera, with Engel & Völkers.",
+    subtitle: "Luxury property advisor — Cap d'Antibes & the French Riviera, with Engel & Völkers.",
     cta1: "View Properties",
     cta2: "Speak with Nigel",
     imageAlt: "Cap d'Antibes coastline at twilight",
-  },
-  properties: {
-    eyebrow: "Featured Properties",
-    title: "A curated selection",
-    intro:
-      "A discreet portfolio of homes across Cap d'Antibes and the wider Riviera, chosen for their setting, their architecture, and the lives they make possible.",
-    footerNote:
-      "Explore every property currently represented, or browse the live catalogue on WhatsApp.",
-    viewFull: "View the full collection",
-    browseWhatsApp: "Browse on WhatsApp",
-  },
-  card: {
-    viewDetails: "View details",
-    enquire: "Enquire on WhatsApp",
-    bedrooms_one: "{{count}} bedroom",
-    bedrooms_other: "{{count}} bedrooms",
   },
   about: {
     eyebrow: "About Nigel",
@@ -116,11 +98,13 @@ export default {
   collection: {
     back: "← Back",
     eyebrow: "The Collection",
-    title: "Every available property",
-    intro:
-      "The complete selection of homes currently represented by Nigel, from waterfront estates on Cap d'Antibes to refined apartments in Cannes and the surrounding hills.",
-    browseWhatsApp: "Browse the full collection on WhatsApp",
+    comingSoonTitle: "New collection coming soon",
+    comingSoonBody:
+      "A new curated selection of properties is being prepared. Please check back shortly, or get in touch directly to discuss your requirements.",
   },
   whatsappAria: "Contact on WhatsApp",
-  language: "Language",
-} as const;
+};
+
+export type Translation = typeof en;
+
+export default en;

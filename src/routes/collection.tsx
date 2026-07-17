@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
+import { SITE_URL } from "@/data/site";
 
 export const Route = createFileRoute("/collection")({
   head: () => ({
@@ -11,7 +12,10 @@ export const Route = createFileRoute("/collection")({
         content:
           "A new curated collection of luxury properties from Nigel Bywater on the Cap d'Antibes and the French Riviera is coming soon.",
       },
+      { property: "og:title", content: "The Collection — Nigel Bywater" },
+      { property: "og:url", content: `${SITE_URL}/collection` },
     ],
+    links: [{ rel: "canonical", href: `${SITE_URL}/collection` }],
   }),
   component: CollectionPage,
 });
@@ -41,12 +45,11 @@ function CollectionPage() {
       <main className="mx-auto flex max-w-3xl flex-col items-center px-6 py-32 text-center md:px-10 md:py-40">
         <p className="eyebrow">{t("collection.eyebrow")}</p>
         <h1 className="mt-5 font-serif text-4xl tracking-tight md:text-6xl">
-          New collection coming soon
+          {t("collection.comingSoonTitle")}
         </h1>
         <div className="mt-8 h-px w-12 bg-ev-red" />
         <p className="mt-8 max-w-xl text-base leading-relaxed text-muted-foreground">
-          A new curated selection of properties is being prepared. Please check back shortly, or get
-          in touch directly to discuss your requirements.
+          {t("collection.comingSoonBody")}
         </p>
         <Link
           to="/"
