@@ -145,13 +145,13 @@ function Header() {
 function Hero() {
   const { t } = useTranslation();
   return (
-    <section id="top" className="relative h-[100svh] min-h-[640px] w-full overflow-hidden">
+    <section id="top" className="relative h-[72svh] min-h-[540px] w-full overflow-hidden">
       <div className="absolute top-20 left-0 right-0 bottom-0">
         <img
           src={heroImage}
           alt={t("hero.imageAlt")}
-          width={1920}
-          height={1280}
+          width={1600}
+          height={1065}
           className="h-full w-full object-cover"
         />
       </div>
@@ -173,7 +173,7 @@ function Hero() {
             "linear-gradient(to top, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.15) 45%, rgba(0,0,0,0) 100%)",
         }}
       />
-      <div className="relative z-10 mx-auto flex h-full max-w-7xl flex-col justify-end px-6 pt-28 pb-20 md:px-10 md:pb-28 lg:pb-32">
+      <div className="relative z-10 mx-auto flex h-full max-w-7xl flex-col justify-end px-6 pt-28 pb-12 md:px-10 md:pb-16">
         <div className="fade-up max-w-2xl text-white">
           <p
             className="eyebrow font-medium text-white"
@@ -182,19 +182,19 @@ function Hero() {
             {t("hero.eyebrow")}
           </p>
           <h1
-            className="mt-6 font-serif text-5xl leading-[1.05] tracking-tight md:text-6xl lg:text-7xl"
+            className="mt-4 font-serif text-4xl leading-[1.05] tracking-tight md:text-5xl lg:text-6xl"
             style={{ textShadow: "0 2px 14px rgba(0,0,0,0.55)" }}
           >
             {t("hero.name")}
           </h1>
-          <div className="mt-6 h-px w-12 bg-ev-red" />
+          <div className="mt-5 h-px w-12 bg-ev-red" />
           <p
-            className="mt-6 max-w-xl font-sans text-base font-light text-white/95 md:text-lg lg:text-xl"
+            className="mt-5 max-w-xl font-sans text-base font-light text-white/95 md:text-lg"
             style={{ textShadow: "0 2px 12px rgba(0,0,0,0.55)" }}
           >
             {t("hero.subtitle")}
           </p>
-          <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4">
+          <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4">
             <Link
               to="/collection"
               className="inline-flex items-center justify-center bg-ev-red px-8 py-4 text-xs font-medium uppercase tracking-[0.22em] text-white shadow-lg transition-colors hover:bg-ev-red/90"
@@ -254,12 +254,16 @@ function About() {
     <section id="about" className="bg-cream py-24 md:py-32">
       <div className="mx-auto grid max-w-7xl gap-16 px-6 md:grid-cols-12 md:gap-20 md:px-10">
         <div className="md:col-span-5">
-          <div className="relative aspect-[4/5] overflow-hidden bg-muted">
+          {/* Portrait source is only 400x367 — render at native size/ratio to avoid upscale blur.
+              If a higher-res portrait (≥1000px wide) becomes available, restore aspect-[4/5] cover. */}
+          <div className="relative max-w-[400px] overflow-hidden bg-muted">
             <img
               src={nigelPortraitUrl}
               alt={t("about.portraitAlt")}
               loading="lazy"
-              className="h-full w-full object-cover object-top"
+              width={400}
+              height={367}
+              className="h-auto w-full"
             />
           </div>
           <div className="mt-4 h-px w-10 bg-ev-red" />
