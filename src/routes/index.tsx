@@ -58,6 +58,10 @@ const NAV = [
   { href: "#contact", key: "nav.contact" },
 ];
 
+// With scrollRestoration on, plain #hash anchors don't scroll — in-page links
+// must go through the router (Link hash= + hashScrollIntoView).
+const HASH_SCROLL = { behavior: "smooth" as const };
+
 function Home() {
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -82,19 +86,26 @@ function Header() {
   return (
     <header className="fixed top-0 left-0 right-0 z-40 bg-charcoal border-b border-white/10 shadow-sm">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5 md:px-10 md:py-6">
-        <a href="#top" className="flex flex-col leading-tight text-white">
+        <Link
+          to="/"
+          hash="top"
+          hashScrollIntoView={HASH_SCROLL}
+          className="flex flex-col leading-tight text-white"
+        >
           <span className="font-serif text-xl tracking-wide md:text-2xl">Nigel Bywater</span>
           <span className="eyebrow mt-1 text-[0.6rem] text-white/80">Engel &amp; Völkers</span>
-        </a>
+        </Link>
         <nav className="hidden items-center gap-10 md:flex">
           {NAV.map((item) => (
-            <a
+            <Link
               key={item.href}
-              href={item.href}
+              to="/"
+              hash={item.href.slice(1)}
+              hashScrollIntoView={HASH_SCROLL}
               className="text-xs font-medium uppercase tracking-[0.22em] text-white/90 transition-colors hover:text-ev-red"
             >
               {t(item.key)}
-            </a>
+            </Link>
           ))}
           <LanguageSwitcher variant="light" />
         </nav>
@@ -123,14 +134,16 @@ function Header() {
         <div className="md:hidden bg-charcoal border-t border-white/10">
           <nav className="flex flex-col gap-1 px-6 py-6">
             {NAV.map((item) => (
-              <a
+              <Link
                 key={item.href}
-                href={item.href}
+                to="/"
+                hash={item.href.slice(1)}
+                hashScrollIntoView={HASH_SCROLL}
                 onClick={() => setOpen(false)}
                 className="py-3 text-sm uppercase tracking-[0.22em] text-white/90 border-b border-white/10 transition-colors hover:text-ev-red"
               >
                 {t(item.key)}
-              </a>
+              </Link>
             ))}
             <div className="pt-4">
               <LanguageSwitcher variant="light" />
@@ -149,9 +162,12 @@ function Hero() {
       <div className="absolute top-20 left-0 right-0 bottom-0">
         <img
           src={heroImage}
+          srcSet={`/images/hero-cap-antibes-800.jpg 800w, ${heroImage} 1600w`}
+          sizes="100vw"
           alt={t("hero.imageAlt")}
           width={1600}
           height={1065}
+          fetchPriority="high"
           className="h-full w-full object-cover"
         />
       </div>
@@ -201,12 +217,14 @@ function Hero() {
             >
               {t("hero.cta1")}
             </Link>
-            <a
-              href="#contact"
+            <Link
+              to="/"
+              hash="contact"
+              hashScrollIntoView={HASH_SCROLL}
               className="inline-flex items-center justify-center border border-white/80 bg-white/5 px-8 py-4 text-xs font-medium uppercase tracking-[0.22em] text-white backdrop-blur-[2px] transition-colors hover:bg-white hover:text-charcoal"
             >
               {t("hero.cta2")}
-            </a>
+            </Link>
           </div>
         </div>
       </div>

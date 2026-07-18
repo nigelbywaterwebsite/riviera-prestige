@@ -8,7 +8,9 @@ export const getRouter = () => {
   const router = createRouter({
     routeTree,
     context: { queryClient },
-    scrollRestoration: true,
+    // Scroll restoration intercepts and cancels in-page #hash scrolling; this
+    // is a two-page brochure site, so native browser behavior is all we need.
+    scrollRestoration: false,
     defaultPreloadStaleTime: 0,
   });
 

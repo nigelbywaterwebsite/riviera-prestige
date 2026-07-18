@@ -75,6 +75,11 @@
     scroll-behavior: smooth;
   }
 
+  /* Keep anchored headings clear of the fixed header */
+  section[id] {
+    scroll-margin-top: 5rem;
+  }
+
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
