@@ -145,7 +145,7 @@ function Header() {
 function Hero() {
   const { t } = useTranslation();
   return (
-    <section id="top" className="relative h-[58svh] min-h-[460px] w-full overflow-hidden">
+    <section id="top" className="relative h-[50svh] min-h-[430px] w-full overflow-hidden">
       <div className="absolute top-20 left-0 right-0 bottom-0">
         <img
           src={heroImage}
@@ -173,7 +173,7 @@ function Hero() {
             "linear-gradient(to top, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.15) 45%, rgba(0,0,0,0) 100%)",
         }}
       />
-      <div className="relative z-10 mx-auto flex h-full max-w-7xl flex-col justify-end px-6 pt-28 pb-12 md:px-10 md:pb-16">
+      <div className="relative z-10 mx-auto flex h-full max-w-7xl flex-col justify-end px-6 pt-28 pb-10 md:px-10 md:pb-12">
         <div className="fade-up max-w-2xl text-white">
           <p
             className="eyebrow font-medium text-white"
