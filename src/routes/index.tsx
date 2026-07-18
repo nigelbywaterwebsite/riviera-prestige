@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useState, type FormEvent } from "react";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 const heroImage = "/images/hero-cap-antibes.jpg";
 const nigelPortraitUrl = "/images/nigel-portrait.jpeg";
@@ -352,109 +352,61 @@ function Testimonials() {
 
 function Contact() {
   const { t } = useTranslation();
-  const [sent, setSent] = useState(false);
-  const onSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setSent(true);
-  };
   return (
     <section id="contact" className="bg-background py-24 md:py-32">
-      <div className="mx-auto grid max-w-7xl gap-16 px-6 md:grid-cols-2 md:gap-20 md:px-10">
-        <div>
-          <p className="eyebrow">{t("contact.eyebrow")}</p>
-          <h2 className="mt-5 font-serif text-4xl tracking-tight md:text-5xl red-rule">
-            {t("contact.title")}
-          </h2>
-          <p className="mt-8 max-w-md text-base leading-relaxed text-muted-foreground">
-            {t("contact.intro")}
-          </p>
-          <p className="mt-5 max-w-md text-[15px] italic leading-relaxed text-foreground/75">
-            {t("contact.languagesNote")}
-          </p>
+      <div className="mx-auto max-w-7xl px-6 md:px-10">
+        <p className="eyebrow">{t("contact.eyebrow")}</p>
+        <h2 className="mt-5 font-serif text-4xl tracking-tight md:text-5xl red-rule">
+          {t("contact.title")}
+        </h2>
+        <p className="mt-8 max-w-2xl text-base leading-relaxed text-muted-foreground">
+          {t("contact.intro")}
+        </p>
+        <p className="mt-5 max-w-2xl text-[15px] italic leading-relaxed text-foreground/75">
+          {t("contact.languagesNote")}
+        </p>
 
-          <dl className="mt-10 space-y-6 text-sm">
-            <div>
-              <dt className="eyebrow text-[0.6rem] text-muted-foreground">
-                {t("contact.whatsapp")}
-              </dt>
-              <dd className="mt-2">
-                <a
-                  href={WHATSAPP_DIRECT_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-base text-charcoal underline-offset-4 hover:underline"
-                >
-                  +33 6 52 61 68 60
-                </a>
-              </dd>
-            </div>
-            <div>
-              <dt className="eyebrow text-[0.6rem] text-muted-foreground">{t("contact.email")}</dt>
-              <dd className="mt-2">
-                <a
-                  href="mailto:nigel.bywater@engelvoelkers.com"
-                  className="text-base text-charcoal underline-offset-4 hover:underline"
-                >
-                  nigel.bywater@engelvoelkers.com
-                </a>
-              </dd>
-            </div>
-            <div>
-              <dt className="eyebrow text-[0.6rem] text-muted-foreground">{t("contact.ev")}</dt>
-              <dd className="mt-2">
-                <a
-                  href="https://www.engelvoelkers.com/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-base text-charcoal underline-offset-4 hover:underline"
-                >
-                  {t("contact.evLink")}
-                </a>
-              </dd>
-            </div>
-          </dl>
-        </div>
-
-        <form onSubmit={onSubmit} className="flex flex-col gap-6">
-          <Field label={t("contact.form.name")} name="name" required />
-          <Field label={t("contact.form.email")} name="email" type="email" required />
-          <Field label={t("contact.form.message")} name="message" textarea required />
-          <button
-            type="submit"
-            className="mt-2 inline-flex items-center justify-center bg-charcoal px-8 py-4 text-xs font-medium uppercase tracking-[0.22em] text-white transition-colors hover:bg-ev-red"
-          >
-            {sent ? t("contact.form.sent") : t("contact.form.send")}
-          </button>
-        </form>
+        <dl className="mt-14 grid gap-10 border-t border-border pt-10 text-sm md:grid-cols-3 md:gap-12">
+          <div>
+            <dt className="eyebrow text-[0.6rem] text-muted-foreground">{t("contact.whatsapp")}</dt>
+            <dd className="mt-2">
+              <a
+                href={WHATSAPP_DIRECT_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-base text-charcoal underline-offset-4 hover:underline"
+              >
+                +33 6 52 61 68 60
+              </a>
+            </dd>
+          </div>
+          <div>
+            <dt className="eyebrow text-[0.6rem] text-muted-foreground">{t("contact.email")}</dt>
+            <dd className="mt-2">
+              <a
+                href="mailto:nigel.bywater@engelvoelkers.com"
+                className="text-base text-charcoal underline-offset-4 hover:underline"
+              >
+                nigel.bywater@engelvoelkers.com
+              </a>
+            </dd>
+          </div>
+          <div>
+            <dt className="eyebrow text-[0.6rem] text-muted-foreground">{t("contact.ev")}</dt>
+            <dd className="mt-2">
+              <a
+                href="https://www.engelvoelkers.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-base text-charcoal underline-offset-4 hover:underline"
+              >
+                {t("contact.evLink")}
+              </a>
+            </dd>
+          </div>
+        </dl>
       </div>
     </section>
-  );
-}
-
-function Field({
-  label,
-  name,
-  type = "text",
-  textarea = false,
-  required = false,
-}: {
-  label: string;
-  name: string;
-  type?: string;
-  textarea?: boolean;
-  required?: boolean;
-}) {
-  const cls =
-    "w-full border-0 border-b border-border bg-transparent px-0 py-3 text-base text-charcoal placeholder-transparent focus:border-ev-red focus:outline-none focus:ring-0";
-  return (
-    <label className="block">
-      <span className="eyebrow text-[0.6rem] text-muted-foreground">{label}</span>
-      {textarea ? (
-        <textarea name={name} required={required} rows={4} className={`${cls} resize-none mt-1`} />
-      ) : (
-        <input name={name} type={type} required={required} className={`${cls} mt-1`} />
-      )}
-    </label>
   );
 }
 

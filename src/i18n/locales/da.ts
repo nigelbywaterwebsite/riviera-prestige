@@ -86,13 +86,6 @@ const da: Translation = {
     email: "E-mail",
     ev: "Engel & Völkers",
     evLink: "Se rådgiverens profil →",
-    form: {
-      name: "Navn",
-      email: "E-mail",
-      message: "Besked",
-      send: "Send besked",
-      sent: "Tak — jeg vender tilbage snarest.",
-    },
   },
   footer: {
     role: "Ejendomsrådgiver · Engel & Völkers",

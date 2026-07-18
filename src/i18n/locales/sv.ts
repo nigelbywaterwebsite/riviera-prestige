@@ -86,13 +86,6 @@ const sv: Translation = {
     email: "E-post",
     ev: "Engel & Völkers",
     evLink: "Se rådgivarens profil →",
-    form: {
-      name: "Namn",
-      email: "E-post",
-      message: "Meddelande",
-      send: "Skicka meddelande",
-      sent: "Tack — jag återkommer inom kort.",
-    },
   },
   footer: {
     role: "Fastighetsrådgivare · Engel & Völkers",

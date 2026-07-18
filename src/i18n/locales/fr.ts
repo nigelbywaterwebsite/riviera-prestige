@@ -86,13 +86,6 @@ const fr: Translation = {
     email: "E-mail",
     ev: "Engel & Völkers",
     evLink: "Voir le profil du conseiller →",
-    form: {
-      name: "Nom",
-      email: "E-mail",
-      message: "Message",
-      send: "Envoyer le message",
-      sent: "Merci — je reviendrai vers vous très vite.",
-    },
   },
   footer: {
     role: "Conseiller immobilier · Engel & Völkers",

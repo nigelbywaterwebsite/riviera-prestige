@@ -86,13 +86,6 @@ const ru: Translation = {
     email: "Эл. почта",
     ev: "Engel & Völkers",
     evLink: "Профиль консультанта →",
-    form: {
-      name: "Имя",
-      email: "Эл. почта",
-      message: "Сообщение",
-      send: "Отправить сообщение",
-      sent: "Спасибо — я свяжусь с вами в ближайшее время.",
-    },
   },
   footer: {
     role: "Консультант по недвижимости · Engel & Völkers",

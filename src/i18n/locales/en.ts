@@ -83,13 +83,6 @@ const en = {
     email: "Email",
     ev: "Engel & Völkers",
     evLink: "View advisor profile →",
-    form: {
-      name: "Name",
-      email: "Email",
-      message: "Message",
-      send: "Send message",
-      sent: "Thank you — I will be in touch.",
-    },
   },
   footer: {
     role: "Property Advisor · Engel & Völkers",
