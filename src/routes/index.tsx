@@ -189,42 +189,44 @@ function Hero() {
             "linear-gradient(to top, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.15) 45%, rgba(0,0,0,0) 100%)",
         }}
       />
-      <div className="relative z-10 mx-auto flex h-full max-w-7xl flex-col justify-end px-6 pt-28 pb-10 md:px-10 md:pb-12">
-        <div className="fade-up max-w-2xl text-white">
-          <p
-            className="eyebrow font-medium text-white"
-            style={{ textShadow: "0 1px 8px rgba(0,0,0,0.6)" }}
-          >
-            {t("hero.eyebrow")}
-          </p>
-          <h1
-            className="mt-4 font-serif text-4xl leading-[1.05] tracking-tight md:text-5xl lg:text-6xl"
-            style={{ textShadow: "0 2px 14px rgba(0,0,0,0.55)" }}
-          >
-            {t("hero.name")}
-          </h1>
-          <div className="mt-5 h-px w-12 bg-ev-red" />
-          <p
-            className="mt-5 max-w-xl font-sans text-base font-light text-white/95 md:text-lg"
-            style={{ textShadow: "0 2px 12px rgba(0,0,0,0.55)" }}
-          >
-            {t("hero.subtitle")}
-          </p>
-          <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4">
-            <Link
-              to="/collection"
-              className="inline-flex items-center justify-center bg-ev-red px-8 py-4 text-xs font-medium uppercase tracking-[0.22em] text-white shadow-lg transition-colors hover:bg-ev-red/90"
+      <div className="absolute top-20 right-0 bottom-0 left-0 z-10 flex flex-col justify-center px-6 py-10 md:px-10 md:py-12">
+        <div className="fade-up mx-auto w-full max-w-7xl">
+          <div className="max-w-2xl text-white">
+            <p
+              className="eyebrow font-medium text-white"
+              style={{ textShadow: "0 1px 8px rgba(0,0,0,0.6)" }}
             >
-              {t("hero.cta1")}
-            </Link>
-            <Link
-              to="/"
-              hash="contact"
-              hashScrollIntoView={HASH_SCROLL}
-              className="inline-flex items-center justify-center border border-white/80 bg-white/5 px-8 py-4 text-xs font-medium uppercase tracking-[0.22em] text-white backdrop-blur-[2px] transition-colors hover:bg-white hover:text-charcoal"
+              {t("hero.eyebrow")}
+            </p>
+            <h1
+              className="mt-4 font-serif text-4xl leading-[1.05] tracking-tight md:text-5xl lg:text-6xl"
+              style={{ textShadow: "0 2px 14px rgba(0,0,0,0.55)" }}
             >
-              {t("hero.cta2")}
-            </Link>
+              {t("hero.name")}
+            </h1>
+            <div className="mt-5 h-px w-12 bg-ev-red" />
+            <p
+              className="mt-5 max-w-xl font-sans text-base font-light text-white/95 md:text-lg"
+              style={{ textShadow: "0 2px 12px rgba(0,0,0,0.55)" }}
+            >
+              {t("hero.subtitle")}
+            </p>
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4">
+              <Link
+                to="/collection"
+                className="inline-flex items-center justify-center bg-ev-red px-8 py-4 text-xs font-medium uppercase tracking-[0.22em] text-white shadow-lg transition-colors hover:bg-ev-red/90"
+              >
+                {t("hero.cta1")}
+              </Link>
+              <Link
+                to="/"
+                hash="contact"
+                hashScrollIntoView={HASH_SCROLL}
+                className="inline-flex items-center justify-center border border-white/80 bg-white/5 px-8 py-4 text-xs font-medium uppercase tracking-[0.22em] text-white backdrop-blur-[2px] transition-colors hover:bg-white hover:text-charcoal"
+              >
+                {t("hero.cta2")}
+              </Link>
+            </div>
           </div>
         </div>
       </div>
