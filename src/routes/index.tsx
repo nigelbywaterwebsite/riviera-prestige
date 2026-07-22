@@ -283,7 +283,7 @@ function About() {
               loading="lazy"
               width={400}
               height={367}
-              className="h-auto w-full"
+              className="h-auto w-full grayscale"
             />
           </div>
           <div className="mt-4 h-px w-10 bg-ev-red" />
